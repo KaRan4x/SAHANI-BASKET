@@ -494,7 +494,8 @@ window.SB_STATE = { isAdmin: false, email: '' };
 
 window.sbSaveHotels = async function(names){
   if (!window.SB_STATE.isAdmin) throw new Error('Admin login required');
-  await setDoc(doc(db, "shared", "hotels"), { names: names, updated: Date.now() });
+  const cleanNames = JSON.parse(JSON.stringify(Array.from(names || []).map(String)));
+  await setDoc(doc(db, "shared", "hotels"), { names: cleanNames, updated: Date.now() });
 };
 
 function broadcast(){
